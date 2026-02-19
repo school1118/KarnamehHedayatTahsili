@@ -43,7 +43,8 @@
             min-height: 100vh;
             font-family: Vazirmatn, Tahoma, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            padding-bottom: 80px;
+            padding-bottom: 100px;
+            position: relative;
         }
 
         .container {
@@ -51,6 +52,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0;
+            padding-bottom: 20px;
         }
 
         header {
@@ -198,21 +200,30 @@
             box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
         }
 
-        .literature-group {
+        .subject-group {
             background-color: #e8f5e9;
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
-            margin: 5px 0;
+            margin: 10px 0;
+            border: 1px solid #c8e6c9;
         }
 
-        .literature-group label {
+        .subject-group h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #c8e6c9;
+            padding-bottom: 8px;
+        }
+
+        .subject-group label {
             display: inline-block;
-            margin: 0 10px;
-            font-size: 0.9rem;
+            margin: 0 15px 10px 0;
+            font-size: 0.95rem;
         }
 
-        .literature-group input {
-            width: 60px;
+        .subject-group input {
+            width: 70px;
             margin: 0 5px;
         }
 
@@ -335,6 +346,7 @@
 
         .print-area {
             direction: rtl;
+            page-break-after: always;
         }
 
         .report-header {
@@ -344,6 +356,7 @@
             background: linear-gradient(135deg, var(--primary-color), #1976d2);
             color: white;
             border-radius: 15px;
+            page-break-inside: avoid;
         }
 
         .report-header h2 {
@@ -359,6 +372,7 @@
             padding: 15px;
             border-radius: 10px;
             margin-top: 15px;
+            page-break-inside: avoid;
         }
 
         .student-details div {
@@ -391,6 +405,7 @@
             border-radius: 10px;
             margin: 20px 0;
             text-align: center;
+            page-break-inside: avoid;
         }
 
         .summary-box h3 {
@@ -405,29 +420,123 @@
             border-radius: 8px;
             margin: 15px 0;
             font-size: 0.95rem;
+            line-height: 1.7;
         }
 
+        /* استایل دکمه‌های ثابت پایین صفحه */
+        .fixed-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border-top: 2px solid var(--primary-light);
+        }
+
+        .whatsapp-button-fixed, .textbook-button-fixed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .whatsapp-button-fixed {
+            background-color: #25D366;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+        }
+
+        .textbook-button-fixed {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+        }
+
+        .whatsapp-button-fixed:active, .textbook-button-fixed:active {
+            transform: scale(0.95);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+
+        .info-badge {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            border: 1px dashed var(--primary-color);
+        }
+
+        /* بهبود چاپ */
         @media print {
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+
             body {
                 background: white;
                 padding: 0;
+                margin: 0;
             }
             
             .no-print {
-                display: none;
+                display: none !important;
             }
             
             .print-area {
-                display: block;
+                display: block !important;
+                page-break-after: avoid;
             }
             
             .container {
                 max-width: 100%;
-                padding: 20px;
+                padding: 0;
+                margin: 0;
             }
             
-            .btn-group, .whatsapp-button, .textbook-button, .footer {
-                display: none;
+            .fixed-buttons {
+                display: none !important;
+            }
+            
+            .field-result {
+                page-break-inside: avoid;
+            }
+            
+            .subject-row {
+                page-break-inside: avoid;
+            }
+            
+            table {
+                page-break-inside: auto;
+            }
+            
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
             }
         }
 
@@ -452,64 +561,16 @@
             .form-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        .whatsapp-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: #25D366;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 18px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-            text-decoration: none;
-            font-weight: bold;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            height: 56px;
-        }
-
-        .textbook-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 18px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-            text-decoration: none;
-            font-weight: bold;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            height: 56px;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            color: #666;
-            font-size: 0.9rem;
-            padding: 10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .info-badge {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 0.95rem;
+            
+            .fixed-buttons {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .whatsapp-button-fixed, .textbook-button-fixed {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -554,7 +615,7 @@
             </div>
             
             <div class="info-note">
-                <strong>📌 نکته مهم:</strong> برای رشته‌های علوم انسانی و علوم و معارف اسلامی، نمره ادبیات فارسی به صورت میانگین سه نمره (املاء، نگارش، ادبیات) محاسبه می‌شود.
+                <strong>📌 راهنما:</strong> نمرات خام برگه‌های امتحانی نوبت دوم (خردادماه یا شهریورماه) پایه‌های هفتم و هشتم را وارد کنید. سیستم به طور خودکار حداقل نمره مورد نیاز شما در پایه نهم را برای هر رشته مشخص می‌کند.
             </div>
             
             <div class="table-container">
@@ -567,19 +628,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- گروه معارف (قرآن + پیام‌های آسمانی) -->
                         <tr>
-                            <td>قرآن</td>
+                            <td colspan="3" style="background: #e8f5e9;">
+                                <strong>📖 معارف اسلامی (میانگین قرآن و پیام‌های آسمانی)</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>➡️ قرآن</td>
                             <td><input type="number" min="0" max="20" step="0.1" id="quran7" class="score-input"></td>
                             <td><input type="number" min="0" max="20" step="0.1" id="quran8" class="score-input"></td>
                         </tr>
                         <tr>
-                            <td>معارف (پیام‌های آسمانی)</td>
+                            <td>➡️ پیام‌های آسمانی</td>
                             <td><input type="number" min="0" max="20" step="0.1" id="dini7" class="score-input"></td>
                             <td><input type="number" min="0" max="20" step="0.1" id="dini8" class="score-input"></td>
                         </tr>
+                        
+                        <!-- گروه ادبیات فارسی -->
                         <tr>
                             <td colspan="3" style="background: #e8f5e9;">
-                                <strong>ادبیات فارسی (برای رشته‌های انسانی و معارف)</strong>
+                                <strong>📝 ادبیات فارسی (میانگین املاء، نگارش و ادبیات)</strong>
                             </td>
                         </tr>
                         <tr>
@@ -597,10 +666,17 @@
                             <td><input type="number" min="0" max="20" step="0.1" id="adabiat7" class="score-input"></td>
                             <td><input type="number" min="0" max="20" step="0.1" id="adabiat8" class="score-input"></td>
                         </tr>
+                        
+                        <!-- سایر دروس -->
                         <tr>
                             <td>عربی</td>
                             <td><input type="number" min="0" max="20" step="0.1" id="arabi7" class="score-input"></td>
                             <td><input type="number" min="0" max="20" step="0.1" id="arabi8" class="score-input"></td>
+                        </tr>
+                        <tr>
+                            <td>مطالعات اجتماعی</td>
+                            <td><input type="number" min="0" max="20" step="0.1" id="ejtemaei7" class="score-input"></td>
+                            <td><input type="number" min="0" max="20" step="0.1" id="ejtemaei8" class="score-input"></td>
                         </tr>
                         <tr>
                             <td>ریاضی</td>
@@ -611,11 +687,6 @@
                             <td>علوم تجربی</td>
                             <td><input type="number" min="0" max="20" step="0.1" id="oloom7" class="score-input"></td>
                             <td><input type="number" min="0" max="20" step="0.1" id="oloom8" class="score-input"></td>
-                        </tr>
-                        <tr>
-                            <td>مطالعات اجتماعی</td>
-                            <td><input type="number" min="0" max="20" step="0.1" id="ejtemaei7" class="score-input"></td>
-                            <td><input type="number" min="0" max="20" step="0.1" id="ejtemaei8" class="score-input"></td>
                         </tr>
                         <tr>
                             <td>کار و فناوری</td>
@@ -632,7 +703,7 @@
             </div>
             
             <div class="info-badge">
-                <strong>📌 راهنما:</strong> نمرات خود را در پایه‌های هفتم و هشتم وارد کنید. سیستم بر اساس این نمرات، حداقل نمره مورد نیاز شما در پایه نهم را برای هر رشته محاسبه می‌کند.
+              
             </div>
         </div>
 
@@ -674,17 +745,19 @@
         </div>
     </div>
 
-    <a href="https://wa.me/989107628500" target="_blank" class="whatsapp-button no-print" title="ارتباط با ما از طریق واتساپ">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M12.044 2C6.491 2 2 6.484 2 12.028c0 1.963.6 3.788 1.624 5.302L2 22l4.68-1.232a10.05 10.05 0 0 0 4.82 1.228c5.553 0 10.044-4.484 10.044-10.028S17.597 2 12.044 2z"/>
-        </svg>
-        ارتباط با ما
-    </a>
-
-    <a href="http://chap.sch.ir/" target="_blank" class="textbook-button no-print" title="پایگاه کتاب های درسی">
-        <span>📚</span>
-        پایگاه کتب درسی
-    </a>
+    <!-- دکمه‌های ثابت پایین صفحه -->
+    <div class="fixed-buttons no-print">
+        <a href="https://wa.me/989107628500" target="_blank" class="whatsapp-button-fixed" title="ارتباط با ما از طریق واتساپ">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path d="M12.044 2C6.491 2 2 6.484 2 12.028c0 1.963.6 3.788 1.624 5.302L2 22l4.68-1.232a10.05 10.05 0 0 0 4.82 1.228c5.553 0 10.044-4.484 10.044-10.028S17.597 2 12.044 2z"/>
+            </svg>
+            ارتباط با ما
+        </a>
+        <a href="http://chap.sch.ir/" target="_blank" class="textbook-button-fixed" title="پایگاه کتاب های درسی">
+            <span>📚</span>
+            پایگاه کتب درسی
+        </a>
+    </div>
 
     <script>
         // تعریف رشته‌ها و دروس مورد نیاز
@@ -692,17 +765,18 @@
             human: {
                 name: "علوم انسانی",
                 subjects: {
+                    "معارف اسلامی": 14,
                     "ادبیات فارسی": 14,
-                    "مطالعات اجتماعی": 13,
-                    "عربی": 12
+                    "عربی": 12,
+                    "مطالعات اجتماعی": 13
                 }
             },
             islamic: {
                 name: "علوم و معارف اسلامی",
                 subjects: {
-                    "معارف (پیام‌های آسمانی)": 14,
-                    "عربی": 14,
-                    "ادبیات فارسی": 14
+                    "معارف اسلامی": 14,
+                    "ادبیات فارسی": 14,
+                    "عربی": 14
                 }
             },
             experimental: {
@@ -770,6 +844,18 @@
             document.getElementById('reportSchoolName').textContent = info.schoolName || '_________________';
         }
 
+        // محاسبه نمره معارف اسلامی (میانگین قرآن و پیام‌های آسمانی)
+        function getReligiousScore(base) {
+            const quran = getScore(`quran${base}`);
+            const dini = getScore(`dini${base}`);
+            
+            // اگر هر دو صفر باشند، صفر برمی‌گردانیم
+            if (quran === 0 && dini === 0) return 0;
+            
+            // محاسبه میانگین
+            return (quran + dini) / 2;
+        }
+
         // محاسبه نمره ادبیات فارسی (میانگین املاء، نگارش، ادبیات)
         function getLiteratureScore(base) {
             const imla = getScore(`imla${base}`);
@@ -785,13 +871,15 @@
 
         function getAllScores() {
             return {
-                "قرآن": { 
-                    n7: getScore('quran7'), 
-                    n8: getScore('quran8') 
-                },
-                "معارف (پیام‌های آسمانی)": { 
-                    n7: getScore('dini7'), 
-                    n8: getScore('dini8') 
+                "معارف اسلامی": { 
+                    n7: getReligiousScore('7'), 
+                    n8: getReligiousScore('8'),
+                    details: {
+                        quran7: getScore('quran7'),
+                        dini7: getScore('dini7'),
+                        quran8: getScore('quran8'),
+                        dini8: getScore('dini8')
+                    }
                 },
                 "ادبیات فارسی": { 
                     n7: getLiteratureScore('7'), 
@@ -809,6 +897,10 @@
                     n7: getScore('arabi7'), 
                     n8: getScore('arabi8') 
                 },
+                "مطالعات اجتماعی": { 
+                    n7: getScore('ejtemaei7'), 
+                    n8: getScore('ejtemaei8') 
+                },
                 "ریاضی": { 
                     n7: getScore('riazi7'), 
                     n8: getScore('riazi8') 
@@ -816,10 +908,6 @@
                 "علوم تجربی": { 
                     n7: getScore('oloom7'), 
                     n8: getScore('oloom8') 
-                },
-                "مطالعات اجتماعی": { 
-                    n7: getScore('ejtemaei7'), 
-                    n8: getScore('ejtemaei8') 
                 },
                 "کار و فناوری": { 
                     n7: getScore('kar7'), 
@@ -841,7 +929,6 @@
         function calculateAll() {
             const scores = getAllScores();
             const results = {};
-            let allResults = [];
 
             // نمایش اطلاعات دانش‌آموز
             displayStudentInfo();
@@ -895,10 +982,17 @@
                         message = `🎯 نیاز به نمره ${required.toFixed(2)}`;
                     }
 
-                    // اضافه کردن جزئیات برای ادبیات فارسی
-                    let literatureDetail = "";
-                    if (subject === "ادبیات فارسی" && subjectScores.details) {
-                        literatureDetail = `<br><small>(املاء: ${subjectScores.details.imla7.toFixed(2)}، نگارش: ${subjectScores.details.negaresh7.toFixed(2)}، ادبیات: ${subjectScores.details.adabiat7.toFixed(2)})</small>`;
+                    // اضافه کردن جزئیات برای دروس ترکیبی
+                    let detailHTML = "";
+                    if (subject === "معارف اسلامی" && subjectScores.details) {
+                        detailHTML = `<br><small>
+                            (قرآن: ${subjectScores.details.quran7.toFixed(2)}، 
+                            پیام‌ها: ${subjectScores.details.dini7.toFixed(2)})</small>`;
+                    } else if (subject === "ادبیات فارسی" && subjectScores.details) {
+                        detailHTML = `<br><small>
+                            (املاء: ${subjectScores.details.imla7.toFixed(2)}، 
+                            نگارش: ${subjectScores.details.negaresh7.toFixed(2)}، 
+                            ادبیات: ${subjectScores.details.adabiat7.toFixed(2)})</small>`;
                     }
 
                     fieldResult.details.push({
@@ -909,7 +1003,7 @@
                         required: required,
                         status: status,
                         message: message,
-                        literatureDetail: literatureDetail
+                        detailHTML: detailHTML
                     });
                 }
 
@@ -933,33 +1027,34 @@
             let totalScore = 0;
             let count = 0;
             for (const [subject, score] of Object.entries(scores)) {
-                if (subject === "ادبیات فارسی") {
-                    totalScore += score.n7 + score.n8;
-                    count += 2;
-                } else {
-                    totalScore += score.n7 + score.n8;
-                    count += 2;
-                }
+                totalScore += score.n7 + score.n8;
+                count += 2;
             }
             const average = count > 0 ? (totalScore / count).toFixed(2) : 0;
             
-            // نمایش جزئیات ادبیات فارسی
+            // نمایش جزئیات دروس ترکیبی
+            const religiousDetails = scores["معارف اسلامی"].details;
             const litDetails = scores["ادبیات فارسی"].details;
-            const litAverage7 = ((litDetails.imla7 + litDetails.negaresh7 + litDetails.adabiat7) / 3).toFixed(2);
-            const litAverage8 = ((litDetails.imla8 + litDetails.negaresh8 + litDetails.adabiat8) / 3).toFixed(2);
+            
+            const religiousAvg7 = ((religiousDetails.quran7 + religiousDetails.dini7) / 2).toFixed(2);
+            const religiousAvg8 = ((religiousDetails.quran8 + religiousDetails.dini8) / 2).toFixed(2);
+            const litAvg7 = ((litDetails.imla7 + litDetails.negaresh7 + litDetails.adabiat7) / 3).toFixed(2);
+            const litAvg8 = ((litDetails.imla8 + litDetails.negaresh8 + litDetails.adabiat8) / 3).toFixed(2);
             
             summaryBox.innerHTML = `
                 <h3>📊 خلاصه وضعیت تحصیلی</h3>
-                <p>میانگین نمرات پایه هفتم و هشتم: ${average}</p>
-                <p>تعداد دروس: 9 درس</p>
+                <p>میانگین کل نمرات پایه هفتم و هشتم: ${average}</p>
+                <p>تعداد دروس: 8 درس</p>
                 <hr style="margin: 10px 0;">
-                <p style="font-size: 0.9rem;">
-                    <strong>نمره ادبیات فارسی:</strong><br>
-                    پایه هفتم: املاء ${litDetails.imla7.toFixed(2)}، نگارش ${litDetails.negaresh7.toFixed(2)}، ادبیات ${litDetails.adabiat7.toFixed(2)}<br>
-                    میانگین: ${litAverage7}<br>
-                    پایه هشتم: املاء ${litDetails.imla8.toFixed(2)}، نگارش ${litDetails.negaresh8.toFixed(2)}، ادبیات ${litDetails.adabiat8.toFixed(2)}<br>
-                    میانگین: ${litAverage8}
-                </p>
+                <div style="text-align: right; font-size: 0.9rem;">
+                    <p><strong>معارف اسلامی:</strong><br>
+                    پایه هفتم: قرآن ${religiousDetails.quran7.toFixed(2)}، پیام‌ها ${religiousDetails.dini7.toFixed(2)} → میانگین: ${religiousAvg7}<br>
+                    پایه هشتم: قرآن ${religiousDetails.quran8.toFixed(2)}، پیام‌ها ${religiousDetails.dini8.toFixed(2)} → میانگین: ${religiousAvg8}</p>
+                    
+                    <p><strong>ادبیات فارسی:</strong><br>
+                    پایه هفتم: املاء ${litDetails.imla7.toFixed(2)}، نگارش ${litDetails.negaresh7.toFixed(2)}، ادبیات ${litDetails.adabiat7.toFixed(2)} → میانگین: ${litAvg7}<br>
+                    پایه هشتم: املاء ${litDetails.imla8.toFixed(2)}، نگارش ${litDetails.negaresh8.toFixed(2)}، ادبیات ${litDetails.adabiat8.toFixed(2)} → میانگین: ${litAvg8}</p>
+                </div>
             `;
             
             let html = '';
@@ -1012,7 +1107,7 @@
                             <div class="subject-row">
                                 <div>
                                     <strong>${detail.subject}</strong>
-                                    ${detail.literatureDetail || ''}
+                                    ${detail.detailHTML || ''}
                                 </div>
                                 <div>${detail.n7.toFixed(2)}</div>
                                 <div>${detail.n8.toFixed(2)}</div>
